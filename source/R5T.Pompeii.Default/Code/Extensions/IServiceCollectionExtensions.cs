@@ -249,12 +249,14 @@ namespace R5T.Pompeii.Default
         /// </summary>
         public static IServiceCollection AddStandardEntryPointProjectBuildOutputConfigurationDirectoryPathProvider(this IServiceCollection services,
             ServiceAction<IEntryPointProjectBuildOutputBinariesDirectoryPathProvider> addEntryPointProjectBuildOutputBinariesDirectoryPathProvider,
-            ServiceAction<IEntryPointProjectBuildConfigurationNameProvider> addEntryPointProjectBuildConfigurationNameProvider)
+            ServiceAction<IEntryPointProjectBuildConfigurationNameProvider> addEntryPointProjectBuildConfigurationNameProvider,
+            ServiceAction<ISolutionAndProjectFileSystemConventions> addSolutionAndProjectFileSystemConventions)
         {
             services
                 .AddSingleton<IEntryPointProjectBuildOutputConfigurationDirectoryPathProvider, StandardEntryPointProjectBuildOutputConfigurationDirectoryPathProvider>()
                 .RunServiceAction(addEntryPointProjectBuildOutputBinariesDirectoryPathProvider)
                 .RunServiceAction(addEntryPointProjectBuildConfigurationNameProvider)
+                .RunServiceAction(addSolutionAndProjectFileSystemConventions)
                 ;
 
             return services;
@@ -265,11 +267,13 @@ namespace R5T.Pompeii.Default
         /// </summary>
         public static ServiceAction<IEntryPointProjectBuildOutputConfigurationDirectoryPathProvider> AddStandardEntryPointProjectBuildOutputConfigurationDirectoryPathProviderAction(this IServiceCollection services,
             ServiceAction<IEntryPointProjectBuildOutputBinariesDirectoryPathProvider> addEntryPointProjectBuildOutputBinariesDirectoryPathProvider,
-            ServiceAction<IEntryPointProjectBuildConfigurationNameProvider> addEntryPointProjectBuildConfigurationNameProvider)
+            ServiceAction<IEntryPointProjectBuildConfigurationNameProvider> addEntryPointProjectBuildConfigurationNameProvider,
+            ServiceAction<ISolutionAndProjectFileSystemConventions> addSolutionAndProjectFileSystemConventions)
         {
             var serviceAction = new ServiceAction<IEntryPointProjectBuildOutputConfigurationDirectoryPathProvider>(() => services.AddStandardEntryPointProjectBuildOutputConfigurationDirectoryPathProvider(
                 addEntryPointProjectBuildOutputBinariesDirectoryPathProvider,
-                addEntryPointProjectBuildConfigurationNameProvider));
+                addEntryPointProjectBuildConfigurationNameProvider,
+                addSolutionAndProjectFileSystemConventions));
             return serviceAction;
         }
 
