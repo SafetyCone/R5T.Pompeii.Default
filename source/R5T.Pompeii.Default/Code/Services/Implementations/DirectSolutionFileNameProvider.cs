@@ -3,6 +3,9 @@
 
 namespace R5T.Pompeii.Default
 {
+    /// <summary>
+    /// Provides a solution file name provided at construction.
+    /// </summary>
     public class DirectSolutionFileNameProvider : ISolutionFileNameProvider
     {
         private string SolutionFileName { get; }
