@@ -2,6 +2,7 @@
 
 using Microsoft.Extensions.DependencyInjection;
 
+using R5T.Angleterria;
 using R5T.Dacia;
 using R5T.Lombardy;
 using R5T.Macommania;
@@ -336,6 +337,128 @@ namespace R5T.Pompeii.Default
             var serviceAction = new ServiceAction<IEntryPointProjectBuildOutputPublishDirectoryPathProvider>(() => services.AddStandardEntryPointProjectBuildOutputPublishDirectoryPathProvider(
                 addEntryPointProjectBuildOutputFrameworkDirectoryPathProvider,
                 addSolutionAndProjectFileSystemConventions));
+            return serviceAction;
+        }
+
+        /// <summary>
+        /// Adds the <see cref="DirectSolutionFileNameProvider"/> implementation of <see cref="ISolutionFileNameProvider"/> as a <see cref="ServiceLifetime.Singleton"/>.
+        /// </summary>
+        public static IServiceCollection AddDirectSolutionFileNameProvider(this IServiceCollection services, string solutionFileName)
+        {
+            services.AddSingleton<ISolutionFileNameProvider, DirectSolutionFileNameProvider>((serviceProvider) =>
+            {
+                var directSolutionFileNameProvider = new DirectSolutionFileNameProvider(solutionFileName);
+                return directSolutionFileNameProvider;
+            });
+
+            return services;
+        }
+
+        /// <summary>
+        /// Adds the <see cref="DirectSolutionFileNameProvider"/> implementation of <see cref="ISolutionFileNameProvider"/> as a <see cref="ServiceLifetime.Singleton"/>.
+        /// </summary>
+        public static ServiceAction<ISolutionFileNameProvider> AddDirectSolutionFileNameProviderAction(this IServiceCollection services, string solutionFileName)
+        {
+            var serviceAction = new ServiceAction<ISolutionFileNameProvider>(() => services.AddDirectSolutionFileNameProvider(solutionFileName));
+            return serviceAction;
+        }
+
+        /// <summary>
+        /// Adds the <see cref="SingleSolutionFileNameProvider"/> implementation of <see cref="ISolutionFileNameProvider"/> as a <see cref="ServiceLifetime.Singleton"/>.
+        /// </summary>
+        public static IServiceCollection AddSingleSolutionFileNameProvider(this IServiceCollection services,
+            ServiceAction<IStringlyTypedPathOperator> addStringlyTypedPathOperator)
+        {
+            services
+                .AddSingleton<ISolutionFileNameProvider, SingleSolutionFileNameProvider>()
+                .RunServiceAction(addStringlyTypedPathOperator)
+                ;
+
+            return services;
+        }
+
+        /// <summary>
+        /// Adds the <see cref="SingleSolutionFileNameProvider"/> implementation of <see cref="ISolutionFileNameProvider"/> as a <see cref="ServiceLifetime.Singleton"/>.
+        /// </summary>
+        public static ServiceAction<ISolutionFileNameProvider> AddSingleSolutionFileNameProviderAction(this IServiceCollection services,
+            ServiceAction<IStringlyTypedPathOperator> addStringlyTypedPathOperator)
+        {
+            var serviceAction = new ServiceAction<ISolutionFileNameProvider>(() => services.AddSingleSolutionFileNameProvider(
+                addStringlyTypedPathOperator));
+            return serviceAction;
+        }
+
+        /// <summary>
+        /// Adds the <see cref="StandardSolutionFilePathProvider"/> implementation of <see cref="ISolutionFilePathProvider"/> as a <see cref="ServiceLifetime.Singleton"/>.
+        /// </summary>
+        public static IServiceCollection AddStandardSolutionFilePathProvider(this IServiceCollection services,
+            ServiceAction<ISolutionDirectoryPathProvider> addSolutionDirectoryPathProvider,
+            ServiceAction<ISolutionFileNameProvider> addSolutionFileNameProvider,
+            ServiceAction<IStringlyTypedPathOperator> addStringlyTypedPathOperator)
+        {
+            services
+                .AddSingleton<ISolutionFilePathProvider, StandardSolutionFilePathProvider>()
+                .RunServiceAction(addSolutionDirectoryPathProvider)
+                .RunServiceAction(addSolutionFileNameProvider)
+                .RunServiceAction(addStringlyTypedPathOperator)
+                ;
+
+            return services;
+        }
+
+        /// <summary>
+        /// Adds the <see cref="StandardSolutionFilePathProvider"/> implementation of <see cref="ISolutionFilePathProvider"/> as a <see cref="ServiceLifetime.Singleton"/>.
+        /// </summary>
+        public static ServiceAction<ISolutionFilePathProvider> AddStandardSolutionFilePathProviderAction(this IServiceCollection services,
+            ServiceAction<ISolutionDirectoryPathProvider> addSolutionDirectoryPathProvider,
+            ServiceAction<ISolutionFileNameProvider> addSolutionFileNameProvider,
+            ServiceAction<IStringlyTypedPathOperator> addStringlyTypedPathOperator)
+        {
+            var serviceAction = new ServiceAction<ISolutionFilePathProvider>(() => services.AddStandardSolutionFilePathProvider(
+                addSolutionDirectoryPathProvider,
+                addSolutionFileNameProvider,
+                addStringlyTypedPathOperator));
+            return serviceAction;
+        }
+
+        /// <summary>
+        /// Adds the <see cref="StandardProjectBinariesOutputDirectoryPathProvider"/> implementation of <see cref="IProjectBuildOutputBinariesDirectoryPathProvider"/> as a <see cref="ServiceLifetime.Singleton"/>.
+        /// </summary>
+        public static IServiceCollection AddStandardProjectBinariesOutputDirectoryPathProvider(this IServiceCollection services,
+            ServiceAction<ISolutionFilePathProvider> addSolutionFilePathProvider,
+            ServiceAction<IEntryPointProjectNameProvider> addEntryPointProjectNameProvider,
+            ServiceAction<IVisualStudioStringlyTypedPathPartsOperator> addVisualStudioStringlyTypedPathPartsOperator,
+            ServiceAction<ISolutionAndProjectFileSystemConventions> addSolutionAndProjectFileSystemConventions,
+            ServiceAction<IStringlyTypedPathOperator> addStringlyTypedPathOperator)
+        {
+            services
+                .AddSingleton<IProjectBuildOutputBinariesDirectoryPathProvider, StandardProjectBinariesOutputDirectoryPathProvider>()
+                .RunServiceAction(addSolutionFilePathProvider)
+                .RunServiceAction(addEntryPointProjectNameProvider)
+                .RunServiceAction(addVisualStudioStringlyTypedPathPartsOperator)
+                .RunServiceAction(addSolutionAndProjectFileSystemConventions)
+                .RunServiceAction(addStringlyTypedPathOperator)
+                ;
+
+            return services;
+        }
+
+        /// <summary>
+        /// Adds the <see cref="StandardProjectBinariesOutputDirectoryPathProvider"/> implementation of <see cref="IProjectBuildOutputBinariesDirectoryPathProvider"/> as a <see cref="ServiceLifetime.Singleton"/>.
+        /// </summary>
+        public static ServiceAction<IProjectBuildOutputBinariesDirectoryPathProvider> AddStandardProjectBinariesOutputDirectoryPathProviderAction(this IServiceCollection services,
+            ServiceAction<ISolutionFilePathProvider> addSolutionFilePathProvider,
+            ServiceAction<IEntryPointProjectNameProvider> addEntryPointProjectNameProvider,
+            ServiceAction<IVisualStudioStringlyTypedPathPartsOperator> addVisualStudioStringlyTypedPathPartsOperator,
+            ServiceAction<ISolutionAndProjectFileSystemConventions> addSolutionAndProjectFileSystemConventions,
+            ServiceAction<IStringlyTypedPathOperator> addStringlyTypedPathOperator)
+        {
+            var serviceAction = new ServiceAction<IProjectBuildOutputBinariesDirectoryPathProvider>(() => services.AddStandardProjectBinariesOutputDirectoryPathProvider(
+                addSolutionFilePathProvider,
+                addEntryPointProjectNameProvider,
+                addVisualStudioStringlyTypedPathPartsOperator,
+                addSolutionAndProjectFileSystemConventions,
+                addStringlyTypedPathOperator));
             return serviceAction;
         }
     }
