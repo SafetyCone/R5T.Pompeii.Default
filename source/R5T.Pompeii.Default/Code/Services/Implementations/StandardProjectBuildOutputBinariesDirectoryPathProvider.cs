@@ -10,7 +10,7 @@ namespace R5T.Pompeii.Default
     /// Gets the binaries directory path from the solution file path assuming the standard development directory structure enforced by Visual Studio:
     ///     ../{Solution Directory}/{Project Directory}/bin/Debug/netcoreapp2.2 (the binaries directory)
     /// </summary>
-    public class StandardProjectBinariesOutputDirectoryPathProvider : IProjectBuildOutputBinariesDirectoryPathProvider
+    public class StandardProjectBuildOutputBinariesDirectoryPathProvider : IProjectBuildOutputBinariesDirectoryPathProvider
     {
         private ISolutionFilePathProvider SolutionFilePathProvider { get; }
         private IEntryPointProjectNameProvider EntryPointProjectNameProvider { get; }
@@ -19,7 +19,7 @@ namespace R5T.Pompeii.Default
         private IStringlyTypedPathOperator StringlyTypedPathOperator { get; }
 
 
-        public StandardProjectBinariesOutputDirectoryPathProvider(ISolutionFilePathProvider solutionFilePathProvider, IEntryPointProjectNameProvider entryPointProjectNameProvider,
+        public StandardProjectBuildOutputBinariesDirectoryPathProvider(ISolutionFilePathProvider solutionFilePathProvider, IEntryPointProjectNameProvider entryPointProjectNameProvider,
             IVisualStudioStringlyTypedPathPartsOperator visualStudioStringlyTypedPathPartsOperator,
             ISolutionAndProjectFileSystemConventions solutionAndProjectFileSystemConventions,
             IStringlyTypedPathOperator stringlyTypedPathOperator)
