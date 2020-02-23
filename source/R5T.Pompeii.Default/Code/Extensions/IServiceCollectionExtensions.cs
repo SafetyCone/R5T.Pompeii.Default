@@ -422,7 +422,7 @@ namespace R5T.Pompeii.Default
         }
 
         /// <summary>
-        /// Adds the <see cref="StandardProjectBinariesOutputDirectoryPathProvider"/> implementation of <see cref="IProjectBuildOutputBinariesDirectoryPathProvider"/> as a <see cref="ServiceLifetime.Singleton"/>.
+        /// Adds the <see cref="StandardProjectBuildOutputBinariesDirectoryPathProvider"/> implementation of <see cref="IProjectBuildOutputBinariesDirectoryPathProvider"/> as a <see cref="ServiceLifetime.Singleton"/>.
         /// </summary>
         public static IServiceCollection AddStandardProjectBinariesOutputDirectoryPathProvider(this IServiceCollection services,
             ServiceAction<ISolutionFilePathProvider> addSolutionFilePathProvider,
@@ -432,7 +432,7 @@ namespace R5T.Pompeii.Default
             ServiceAction<IStringlyTypedPathOperator> addStringlyTypedPathOperator)
         {
             services
-                .AddSingleton<IProjectBuildOutputBinariesDirectoryPathProvider, StandardProjectBinariesOutputDirectoryPathProvider>()
+                .AddSingleton<IProjectBuildOutputBinariesDirectoryPathProvider, StandardProjectBuildOutputBinariesDirectoryPathProvider>()
                 .RunServiceAction(addSolutionFilePathProvider)
                 .RunServiceAction(addEntryPointProjectNameProvider)
                 .RunServiceAction(addVisualStudioStringlyTypedPathPartsOperator)
@@ -444,7 +444,7 @@ namespace R5T.Pompeii.Default
         }
 
         /// <summary>
-        /// Adds the <see cref="StandardProjectBinariesOutputDirectoryPathProvider"/> implementation of <see cref="IProjectBuildOutputBinariesDirectoryPathProvider"/> as a <see cref="ServiceLifetime.Singleton"/>.
+        /// Adds the <see cref="StandardProjectBuildOutputBinariesDirectoryPathProvider"/> implementation of <see cref="IProjectBuildOutputBinariesDirectoryPathProvider"/> as a <see cref="ServiceLifetime.Singleton"/>.
         /// </summary>
         public static ServiceAction<IProjectBuildOutputBinariesDirectoryPathProvider> AddStandardProjectBinariesOutputDirectoryPathProviderAction(this IServiceCollection services,
             ServiceAction<ISolutionFilePathProvider> addSolutionFilePathProvider,
@@ -459,6 +459,31 @@ namespace R5T.Pompeii.Default
                 addVisualStudioStringlyTypedPathPartsOperator,
                 addSolutionAndProjectFileSystemConventions,
                 addStringlyTypedPathOperator));
+            return serviceAction;
+        }
+
+        /// <summary>
+        /// Adds the <see cref="PublishDirectoryProjectBuildOutputBinariesDirectoryPathProvider"/> implementation of <see cref="IProjectBuildOutputBinariesDirectoryPathProvider"/> as a <see cref="ServiceLifetime.Singleton"/>.
+        /// </summary>
+        public static IServiceCollection AddPublishDirectoryProjectBuildOutputBinariesDirectoryPathProvider(this IServiceCollection services,
+            ServiceAction<IEntryPointProjectBuildOutputPublishDirectoryPathProvider> addEntryPointProjectBuildOutputPublishDirectoryPathProvider)
+        {
+            services
+                .AddSingleton<IProjectBuildOutputBinariesDirectoryPathProvider, PublishDirectoryProjectBuildOutputBinariesDirectoryPathProvider>()
+                .RunServiceAction(addEntryPointProjectBuildOutputPublishDirectoryPathProvider)
+                ;
+
+            return services;
+        }
+
+        /// <summary>
+        /// Adds the <see cref="PublishDirectoryProjectBuildOutputBinariesDirectoryPathProvider"/> implementation of <see cref="IProjectBuildOutputBinariesDirectoryPathProvider"/> as a <see cref="ServiceLifetime.Singleton"/>.
+        /// </summary>
+        public static ServiceAction<IProjectBuildOutputBinariesDirectoryPathProvider> AddPublishDirectoryProjectBuildOutputBinariesDirectoryPathProviderAction(this IServiceCollection services,
+            ServiceAction<IEntryPointProjectBuildOutputPublishDirectoryPathProvider> addEntryPointProjectBuildOutputPublishDirectoryPathProvider)
+        {
+            var serviceAction = new ServiceAction<IProjectBuildOutputBinariesDirectoryPathProvider>(() => services.AddPublishDirectoryProjectBuildOutputBinariesDirectoryPathProvider(
+                addEntryPointProjectBuildOutputPublishDirectoryPathProvider));
             return serviceAction;
         }
     }
