@@ -223,13 +223,13 @@ namespace R5T.Pompeii.Default
         }
 
         /// <summary>
-        /// Adds the <see cref="DirectEntryPointProjectBuildConfigurationNameProvider"/> implementation of <see cref="IEntryPointProjectBuildConfigurationNameProvider"/> as a <see cref="ServiceLifetime.Singleton"/>.
+        /// Adds the <see cref="DirectBuildConfigurationNameProvider"/> implementation of <see cref="IBuildConfigurationNameProvider"/> as a <see cref="ServiceLifetime.Singleton"/>.
         /// </summary>
-        public static IServiceCollection AddDirectEntryPointProjectBuildConfigurationNameProvider(this IServiceCollection services, string entryPointProjectBuildConfigurationName)
+        public static IServiceCollection AddDirectBuildConfigurationNameProvider(this IServiceCollection services, string entryPointProjectBuildConfigurationName)
         {
-            services.AddSingleton<IEntryPointProjectBuildConfigurationNameProvider, DirectEntryPointProjectBuildConfigurationNameProvider>((serviceProvider) =>
+            services.AddSingleton<IBuildConfigurationNameProvider, DirectBuildConfigurationNameProvider>((serviceProvider) =>
             {
-                var directEntryPointProjectBuildConfigurationNameProvider = new DirectEntryPointProjectBuildConfigurationNameProvider(entryPointProjectBuildConfigurationName);
+                var directEntryPointProjectBuildConfigurationNameProvider = new DirectBuildConfigurationNameProvider(entryPointProjectBuildConfigurationName);
                 return directEntryPointProjectBuildConfigurationNameProvider;
             });
 
@@ -237,11 +237,11 @@ namespace R5T.Pompeii.Default
         }
 
         /// <summary>
-        /// Adds the <see cref="DirectEntryPointProjectBuildConfigurationNameProvider"/> implementation of <see cref="IEntryPointProjectBuildConfigurationNameProvider"/> as a <see cref="ServiceLifetime.Singleton"/>.
+        /// Adds the <see cref="DirectBuildConfigurationNameProvider"/> implementation of <see cref="IBuildConfigurationNameProvider"/> as a <see cref="ServiceLifetime.Singleton"/>.
         /// </summary>
-        public static ServiceAction<IEntryPointProjectBuildConfigurationNameProvider> AddDirectEntryPointProjectBuildConfigurationNameProviderAction(this IServiceCollection services, string entryPointProjectBuildConfigurationName)
+        public static ServiceAction<IBuildConfigurationNameProvider> AddDirectBuildConfigurationNameProviderAction(this IServiceCollection services, string entryPointProjectBuildConfigurationName)
         {
-            var serviceAction = new ServiceAction<IEntryPointProjectBuildConfigurationNameProvider>(() => services.AddDirectEntryPointProjectBuildConfigurationNameProvider(entryPointProjectBuildConfigurationName));
+            var serviceAction = new ServiceAction<IBuildConfigurationNameProvider>(() => services.AddDirectBuildConfigurationNameProvider(entryPointProjectBuildConfigurationName));
             return serviceAction;
         }
 
@@ -250,13 +250,13 @@ namespace R5T.Pompeii.Default
         /// </summary>
         public static IServiceCollection AddStandardEntryPointProjectBuildOutputConfigurationDirectoryPathProvider(this IServiceCollection services,
             ServiceAction<IEntryPointProjectBuildOutputBinariesDirectoryPathProvider> addEntryPointProjectBuildOutputBinariesDirectoryPathProvider,
-            ServiceAction<IEntryPointProjectBuildConfigurationNameProvider> addEntryPointProjectBuildConfigurationNameProvider,
+            ServiceAction<IBuildConfigurationNameProvider> addBuildConfigurationNameProvider,
             ServiceAction<ISolutionAndProjectFileSystemConventions> addSolutionAndProjectFileSystemConventions)
         {
             services
                 .AddSingleton<IEntryPointProjectBuildOutputConfigurationDirectoryPathProvider, StandardEntryPointProjectBuildOutputConfigurationDirectoryPathProvider>()
                 .RunServiceAction(addEntryPointProjectBuildOutputBinariesDirectoryPathProvider)
-                .RunServiceAction(addEntryPointProjectBuildConfigurationNameProvider)
+                .RunServiceAction(addBuildConfigurationNameProvider)
                 .RunServiceAction(addSolutionAndProjectFileSystemConventions)
                 ;
 
@@ -268,12 +268,12 @@ namespace R5T.Pompeii.Default
         /// </summary>
         public static ServiceAction<IEntryPointProjectBuildOutputConfigurationDirectoryPathProvider> AddStandardEntryPointProjectBuildOutputConfigurationDirectoryPathProviderAction(this IServiceCollection services,
             ServiceAction<IEntryPointProjectBuildOutputBinariesDirectoryPathProvider> addEntryPointProjectBuildOutputBinariesDirectoryPathProvider,
-            ServiceAction<IEntryPointProjectBuildConfigurationNameProvider> addEntryPointProjectBuildConfigurationNameProvider,
+            ServiceAction<IBuildConfigurationNameProvider> addBuildConfigurationNameProvider,
             ServiceAction<ISolutionAndProjectFileSystemConventions> addSolutionAndProjectFileSystemConventions)
         {
             var serviceAction = new ServiceAction<IEntryPointProjectBuildOutputConfigurationDirectoryPathProvider>(() => services.AddStandardEntryPointProjectBuildOutputConfigurationDirectoryPathProvider(
                 addEntryPointProjectBuildOutputBinariesDirectoryPathProvider,
-                addEntryPointProjectBuildConfigurationNameProvider,
+                addBuildConfigurationNameProvider,
                 addSolutionAndProjectFileSystemConventions));
             return serviceAction;
         }

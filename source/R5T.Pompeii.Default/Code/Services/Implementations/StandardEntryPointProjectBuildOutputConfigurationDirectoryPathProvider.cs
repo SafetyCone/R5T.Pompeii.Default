@@ -6,17 +6,17 @@ namespace R5T.Pompeii.Default
     public class StandardEntryPointProjectBuildOutputConfigurationDirectoryPathProvider : IEntryPointProjectBuildOutputConfigurationDirectoryPathProvider
     {
         private IEntryPointProjectBuildOutputBinariesDirectoryPathProvider EntryPointProjectBuildOutputBinariesDirectoryPathProvider { get; }
-        private IEntryPointProjectBuildConfigurationNameProvider EntryPointProjectBuildConfigurationNameProvider { get; }
+        private IBuildConfigurationNameProvider BuildConfigurationNameProvider { get; }
         private ISolutionAndProjectFileSystemConventions SolutionAndProjectFileSystemConventions { get; }
 
 
         public StandardEntryPointProjectBuildOutputConfigurationDirectoryPathProvider(
             IEntryPointProjectBuildOutputBinariesDirectoryPathProvider entryPointProjectBuildOutputBinariesDirectoryPathProvider,
-            IEntryPointProjectBuildConfigurationNameProvider entryPointProjectBuildConfigurationNameProvider,
+            IBuildConfigurationNameProvider buildConfigurationNameProvider,
             ISolutionAndProjectFileSystemConventions solutionAndProjectFileSystemConventions)
         {
             this.EntryPointProjectBuildOutputBinariesDirectoryPathProvider = entryPointProjectBuildOutputBinariesDirectoryPathProvider;
-            this.EntryPointProjectBuildConfigurationNameProvider = entryPointProjectBuildConfigurationNameProvider;
+            this.BuildConfigurationNameProvider = buildConfigurationNameProvider;
             this.SolutionAndProjectFileSystemConventions = solutionAndProjectFileSystemConventions;
         }
 
@@ -24,9 +24,9 @@ namespace R5T.Pompeii.Default
         {
             var binDirectoryPath = this.EntryPointProjectBuildOutputBinariesDirectoryPathProvider.GetEntryPointProjectBuildOutputBinariesDirectoryPath();
 
-            var configurationName = this.EntryPointProjectBuildConfigurationNameProvider.GetEntryPointProjectBuildConfigurationName();
+            var buildConfigurationName = this.BuildConfigurationNameProvider.GetBuildConfigurationName();
 
-            var configurationDirectoryPath = this.SolutionAndProjectFileSystemConventions.GetConfigurationDirectoryPathFromBinariesDirectoryPath(binDirectoryPath, configurationName);
+            var configurationDirectoryPath = this.SolutionAndProjectFileSystemConventions.GetConfigurationDirectoryPathFromBinariesDirectoryPath(binDirectoryPath, buildConfigurationName);
             return configurationDirectoryPath;
         }
     }
