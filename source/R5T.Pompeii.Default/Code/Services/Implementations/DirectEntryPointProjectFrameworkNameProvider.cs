@@ -1,14 +1,18 @@
-﻿using System;
+using System;
+
+using R5T.T0064;
 
 
 namespace R5T.Pompeii.Default
 {
-    public class DirectEntryPointProjectFrameworkNameProvider : IEntryPointProjectFrameworkNameProvider
+    [ServiceImplementationMarker]
+    public class DirectEntryPointProjectFrameworkNameProvider : IEntryPointProjectFrameworkNameProvider, IServiceImplementation
     {
         private string EntryPointProjectFrameworkName { get; }
 
 
-        public DirectEntryPointProjectFrameworkNameProvider(string entryPointProjectFrameworkName)
+        public DirectEntryPointProjectFrameworkNameProvider(
+            [NotServiceComponent] string entryPointProjectFrameworkName)
         {
             this.EntryPointProjectFrameworkName = entryPointProjectFrameworkName;
         }

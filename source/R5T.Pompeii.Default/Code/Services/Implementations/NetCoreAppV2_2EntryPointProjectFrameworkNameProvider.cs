@@ -1,11 +1,16 @@
-﻿using System;
+using System;
 
 using R5T.Angleterria;
+
+using R5T.T0064;
 
 
 namespace R5T.Pompeii.Default
 {
-    public class NetCoreAppV2_2EntryPointProjectFrameworkNameProvider : DirectEntryPointProjectFrameworkNameProvider
+    [ServiceImplementationMarker]
+    public class NetCoreAppV2_2EntryPointProjectFrameworkNameProvider : DirectEntryPointProjectFrameworkNameProvider,
+        IEntryPointProjectFrameworkNameProvider,
+        IServiceImplementation
     {
         public NetCoreAppV2_2EntryPointProjectFrameworkNameProvider()
             : base(NetCoreAppV2_2.FrameworkName)

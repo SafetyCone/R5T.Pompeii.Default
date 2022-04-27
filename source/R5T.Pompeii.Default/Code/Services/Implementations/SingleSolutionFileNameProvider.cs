@@ -1,15 +1,15 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Linq;
 
 using R5T.Angleterria;
 using R5T.Lombardy;
-using R5T.Magyar;
+using R5T.Magyar;using R5T.T0064;
 
 
 namespace R5T.Pompeii.Default
-{
-    public class SingleSolutionFileNameProvider : ISolutionFileNameProvider
+{[ServiceImplementationMarker]
+    public class SingleSolutionFileNameProvider : ISolutionFileNameProvider,IServiceImplementation
     {
         private IStringlyTypedPathOperator StringlyTypedPathOperator { get; }
 

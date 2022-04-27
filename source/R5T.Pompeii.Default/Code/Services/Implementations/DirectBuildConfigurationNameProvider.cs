@@ -1,14 +1,18 @@
-﻿using System;
+using System;
+
+using R5T.T0064;
 
 
 namespace R5T.Pompeii.Default
 {
-    public class DirectBuildConfigurationNameProvider : IBuildConfigurationNameProvider
+    [ServiceImplementationMarker]
+    public class DirectBuildConfigurationNameProvider : IBuildConfigurationNameProvider, IServiceImplementation
     {
         private string BuildConfigurationName { get; }
 
 
-        public DirectBuildConfigurationNameProvider(string buildConfigurationName)
+        public DirectBuildConfigurationNameProvider(
+            [NotServiceComponent] string buildConfigurationName)
         {
             this.BuildConfigurationName = buildConfigurationName;
         }

@@ -1,9 +1,9 @@
-﻿using System;
+using System;using R5T.T0064;
 
 
 namespace R5T.Pompeii.Default
-{
-    public class StandardEntryPointProjectBuildOutputBinariesDirectoryPathProvider : IEntryPointProjectBuildOutputBinariesDirectoryPathProvider
+{[ServiceImplementationMarker]
+    public class StandardEntryPointProjectBuildOutputBinariesDirectoryPathProvider : IEntryPointProjectBuildOutputBinariesDirectoryPathProvider,IServiceImplementation
     {
         private IEntryPointProjectDirectoryPathProvider EntryPointProjectDirectoryPathProvider { get; }
         private ISolutionAndProjectFileSystemConventions SolutionAndProjectFileSystemConventions { get; }

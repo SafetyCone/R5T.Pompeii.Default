@@ -1,16 +1,16 @@
-﻿using System;
+using System;
 
 using R5T.Angleterria;
-using R5T.Lombardy;
+using R5T.Lombardy;using R5T.T0064;
 
 
 namespace R5T.Pompeii.Default
-{
+{[ServiceImplementationMarker]
     /// <summary>
     /// Gets the binaries directory path from the solution file path assuming the standard development directory structure enforced by Visual Studio:
     ///     ../{Solution Directory}/{Project Directory}/bin/Debug/netcoreapp2.2 (the binaries directory)
     /// </summary>
-    public class StandardProjectBuildOutputBinariesDirectoryPathProvider : IProjectBuildOutputBinariesDirectoryPathProvider
+    public class StandardProjectBuildOutputBinariesDirectoryPathProvider : IProjectBuildOutputBinariesDirectoryPathProvider,IServiceImplementation
     {
         private ISolutionFilePathProvider SolutionFilePathProvider { get; }
         private IEntryPointProjectNameProvider EntryPointProjectNameProvider { get; }
