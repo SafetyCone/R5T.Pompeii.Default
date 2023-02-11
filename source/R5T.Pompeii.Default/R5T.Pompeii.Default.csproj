@@ -12,5 +12,6 @@
     <ProjectReference Include="..\..\..\R5T.Macommania.Base\source\R5T.Macommania.Base\R5T.Macommania.Base.csproj" />
     <ProjectReference Include="..\..\..\R5T.Magyar\source\R5T.Magyar\R5T.Magyar.csproj" />
     <ProjectReference Include="..\..\..\R5T.Pompeii.Base\source\R5T.Pompeii.Base\R5T.Pompeii.Base.csproj" />
+    <ProjectReference Include="..\..\..\R5T.T0064\source\R5T.T0064.T001\R5T.T0064.T001.csproj" />
   </ItemGroup>
 </Project>

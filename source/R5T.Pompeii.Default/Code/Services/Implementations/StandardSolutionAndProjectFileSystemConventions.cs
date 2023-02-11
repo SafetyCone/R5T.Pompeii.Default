@@ -5,11 +5,12 @@ using R5T.Lombardy;using R5T.T0064;
 
 
 namespace R5T.Pompeii.Default
-{[ServiceImplementationMarker]
+{
     /// <summary>
     /// The standard directory hierarchy is:
     /// ./Solution Directory/Project Directory/bin/{Configuration Directory: Debug or Release}/{Framework Directory: netcoreapp2.2 or netstandard2.0}/publish
     /// </summary>
+    [ServiceImplementationMarker]
     public class StandardSolutionAndProjectFileSystemConventions : ISolutionAndProjectFileSystemConventions,IServiceImplementation
     {
         private IStringlyTypedPathOperator StringlyTypedPathOperator { get; }

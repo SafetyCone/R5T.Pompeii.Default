@@ -4,11 +4,12 @@ using R5T.Lombardy;using R5T.T0064;
 
 
 namespace R5T.Pompeii.Default
-{[ServiceImplementationMarker]
+{
     /// <summary>
     /// Gets the solution file path from the current executable's file path assuming the standard development directory structure enforced by Visual Studio:
     ///     ../{Solution Directory}/{Project Directory}/bin/Debug/netcoreapp2.2/{executable file}
     /// </summary>
+    [ServiceImplementationMarker]
     public class StandardSolutionFilePathProvider : ISolutionFilePathProvider,IServiceImplementation
     {
         private ISolutionDirectoryPathProvider SolutionDirectoryPathProvider { get; }
